@@ -734,21 +734,26 @@ unify_mat_list = function(mat_list, default = 0) {
 # == author
 # Zuguang Gu <z.gu@dkfz.de>
 #
-anno_oncoprint_barplot = function(type = NULL, which = c("column", "row"),
+anno_oncoprint_barplot = function(oncoObj = NULL, type = NULL, which = c("column", "row"),
 	bar_width = 0.6, beside = FALSE, ylim = NULL, show_fraction = FALSE, axis = TRUE,
 	axis_param = if(which == "column") default_axis_param("column") else list(side = "top", labels_rot = 0),
 	width = NULL, height = NULL, border = FALSE) {
 
-	if(is.null(.ENV$current_annotation_which)) {
-		which = match.arg(which)[1]
-	} else {
-		which = .ENV$current_annotation_which
-	}
+  # TO DO - not sure how to handle this so ignoring and must specify which
+	# if(is.null(.ENV$current_annotation_which)) {
+	# 	which = match.arg(which)[1]
+	# } else {
+	# 	which = .ENV$current_annotation_which
+	# }
 
 	anno_size = anno_width_and_height(which, width, height, unit(2, "cm"))
 
 	column_fun = function(index, k, n) {
-		pf = get("object", envir = parent.frame(7))@heatmap_param$oncoprint_env
+	  if (is.null(oncoObj)) {
+	    pf = get("object", envir = parent.frame(7))@heatmap_param$oncoprint_env
+	  } else {
+	    pf = oncoObj@heatmap_param$oncoprint_env
+	  }
 		arr = pf$arr
 		all_type = pf$all_type
 		col = pf$col
