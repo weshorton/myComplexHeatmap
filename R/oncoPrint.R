@@ -55,7 +55,7 @@
 # == author
 # Zuguang Gu <z.gu@dkfz.de>
 #
-oncoPrint = function(mat, name,
+myOncoPrint = function(mat, name,
 	get_type = default_get_type,
 	alter_fun, 
 	alter_fun_is_vectorized = NULL,
